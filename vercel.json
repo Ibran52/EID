@@ -1,5 +1,5 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/EID_INVITATION.html" }
+    { "source": "/", "destination": "/index.html" }
   ]
 }
