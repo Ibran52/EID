@@ -2022,6 +2022,116 @@
                 height: 55px;
             }
         }
+
+        /* ── LOCATION SECTION ── */
+        .section-location {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px;
+        }
+
+        .location-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 52px 44px;
+            max-width: 760px;
+            width: 100%;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 0 60px rgba(232,201,106,0.08), 0 2px 80px rgba(0,0,0,0.5);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .location-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .location-badge {
+            display: inline-block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.78rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(232,201,106,0.35);
+            padding: 5px 18px;
+            border-radius: 20px;
+            margin-bottom: 22px;
+        }
+
+        .location-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            color: var(--gold2);
+            margin-bottom: 10px;
+            letter-spacing: 0.04em;
+        }
+
+        .location-icon-row {
+            font-size: 2rem;
+            margin-bottom: 18px;
+        }
+
+        .location-address {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2.2vw, 1.22rem);
+            color: var(--cream);
+            line-height: 1.75;
+            margin-bottom: 32px;
+            opacity: 0.88;
+        }
+
+        .location-address strong {
+            color: var(--gold);
+        }
+
+        .map-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(232,201,106,0.2);
+            box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 320px;
+            display: block;
+            filter: grayscale(0.1) contrast(1.05);
+        }
+
+        .map-open-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 32px;
+            border: 1.5px solid var(--gold);
+            border-radius: 30px;
+            background: rgba(232,201,106,0.07);
+            color: var(--gold);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.05rem;
+            letter-spacing: 0.12em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+        }
+        .map-open-btn:hover {
+            background: rgba(232,201,106,0.15);
+            box-shadow: 0 0 24px rgba(232,201,106,0.25);
+            transform: translateY(-2px);
+        }
+
+        @media(max-width:600px) {
+            .location-card { padding: 36px 20px; }
+            .map-wrapper iframe { height: 240px; }
+        }
     </style>
 </head>
 
@@ -2560,6 +2670,35 @@
             </div>
         </section>
 
+        <!-- LOCATION SECTION -->
+        <section class="section-location">
+            <div class="location-card" id="locationCard">
+                <div class="location-badge">✦ Venue &amp; Location ✦</div>
+                <div class="location-title">Find Us Here 📍</div>
+                <div class="location-icon-row">🕌</div>
+                <div class="location-address">
+                    <strong>55W7+R5Q, Prabharam Mandir Road,</strong><br>
+                    Kailash Colony, Ulhasnagar,<br>
+                    Maharashtra – 421005
+                </div>
+                <div class="map-wrapper">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.123456789!2d73.1554!3d19.2183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7952b8d5b1a5d%3A0x0!2s55W7%2BR5Q%2C+Prabharam+Mandir+Road%2C+Kailash+Colony%2C+Ulhasnagar%2C+Maharashtra+421005!5e0!3m2!1sen!2sin!4v1700000000000"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Event Location Map">
+                    </iframe>
+                </div>
+                <a class="map-open-btn"
+                   href="https://maps.google.com/?q=55W7%2BR5Q,+Prabharam+Mandir+Road,+Kailash+Colony,+Ulhasnagar,+Maharashtra+421005"
+                   target="_blank"
+                   rel="noopener noreferrer">
+                    🗺️ &nbsp;Open in Google Maps
+                </a>
+            </div>
+        </section>
+
         <!-- CLOSING SECTION -->
         <section class="section-closing">
             <div class="closing-card" id="closingCard">
@@ -2709,7 +2848,7 @@
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
         }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-        ['wishesCard', 'familyCard', 'blessingsCard', 'closingCard'].forEach(id => {
+        ['wishesCard', 'familyCard', 'blessingsCard', 'locationCard', 'closingCard'].forEach(id => {
             const el = document.getElementById(id); if (el) revealObserver.observe(el);
         });
 
@@ -2720,7 +2859,7 @@
                 moonEl.style.transform = `translateY(${sy * -0.06}px)`;
             }
             if (sy > 80) document.getElementById('scrollHint').style.opacity = '0';
-            const revealIds = ['wishesCard', 'familyCard', 'blessingsCard', 'closingCard'];
+            const revealIds = ['wishesCard', 'familyCard', 'blessingsCard', 'locationCard', 'closingCard'];
             revealIds.forEach(id => {
                 const el = document.getElementById(id);
                 if (el && el.getBoundingClientRect().top < window.innerHeight * 0.88) el.classList.add('visible');
